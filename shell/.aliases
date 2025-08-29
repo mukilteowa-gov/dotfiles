@@ -1,0 +1,18 @@
+alias ls='ls --color'
+alias nvim='nvim'
+alias c='clear'
+
+# Tmuxinator shortcuts
+alias work='tmuxinator start work'
+alias home='tmuxinator start home'
+alias avstack='tmuxinator start avstack'
+alias orca='tmuxinator start orca'
+alias gis='tmuxinator start gis'
+alias mux='tmuxinator'
+
+# Quick notes
+alias notes='nvim ~/notes/quicknotes.md'
+alias cheat='nvim ~/notes/tmux-nvim-cheatsheet.md'
+
+# Claude badge management
+alias badge='~/dotfiles/shell/claude-badge.sh'
