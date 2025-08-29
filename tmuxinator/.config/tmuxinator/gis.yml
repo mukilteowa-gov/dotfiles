@@ -1,0 +1,27 @@
+# ~/.config/tmuxinator/gis.yml
+# GIS project workspace
+
+name: gis
+root: ~/projects/gis
+
+# Project-specific setup
+windows:
+  - editor:
+      layout: main-vertical
+      panes:
+        - nvim .
+        - # Map data / visualization
+  - data:
+      layout: even-horizontal
+      panes:
+        - # Data processing
+        - # Database queries
+  - analysis:
+      panes:
+        - # Spatial analysis tools
+  - visualization:
+      panes:
+        - # Map rendering/display
+  - jupyter:
+      panes:
+        - # Jupyter for data exploration

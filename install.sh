@@ -54,6 +54,13 @@ backup_existing() {
         ".aliases"
         ".config/nvim"
         ".config/ohmyposh"
+        ".config/tmuxinator"
+        ".gitconfig"
+        ".gitignore_global"
+        ".bashrc"
+        ".profile"
+        ".local/bin/env"
+        ".config/gh/config.yml"
     )
     
     local needs_backup=false
@@ -91,6 +98,11 @@ install_dotfiles() {
         "nvim"
         "shell"
         "ohmyposh"
+        "tmuxinator"
+        "git"
+        "bash"
+        "bin"
+        "gh"
     )
     
     for package in "${packages[@]}"; do

@@ -1,0 +1,27 @@
+# ~/.config/tmuxinator/orca.yml
+# Orca project workspace
+
+name: orca
+root: ~/projects/orca
+
+# Project-specific setup
+windows:
+  - editor:
+      layout: main-horizontal
+      panes:
+        - nvim .
+        - # Terminal for project commands
+  - api:
+      panes:
+        - # API server/development
+  - frontend:
+      panes:
+        - # Frontend dev server
+  - testing:
+      layout: even-horizontal
+      panes:
+        - # Unit tests
+        - # Integration tests
+  - tools:
+      panes:
+        - # Build tools, linting, etc.

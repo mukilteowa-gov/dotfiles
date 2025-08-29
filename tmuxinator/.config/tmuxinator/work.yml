@@ -1,0 +1,49 @@
+# ~/.config/tmuxinator/work.yml
+# Multi-monitor workflow for office/multi-screen setup
+# Each project gets the same 6-pane layout for consistency
+
+name: work
+root: ~/
+
+# Startup configuration
+startup_window: avstack
+
+# Project windows with consistent 6-pane layout
+windows:
+  - avstack:
+      root: ~/dev/avstack
+      layout: 94af,508x69,0,0{95x69,0,0,20,134x69,96,0,8,164x69,231,0,16,70x69,396,0[70x34,396,0,17,70x34,396,35,19],41x69,467,0,9}
+      panes:
+        - # Shell 1 (left pane)
+        - # Shell 2 (middle-left pane)
+        - # Shell 3 (middle-right pane)
+        - # Shell 4 (right-top pane)
+        - # Shell 5 (right-bottom pane)
+        - # Shell 6 (far right pane)
+        
+  - orca:
+      root: ~/dev/orca-stack
+      layout: 94af,508x69,0,0{95x69,0,0,20,134x69,96,0,8,164x69,231,0,16,70x69,396,0[70x34,396,0,17,70x34,396,35,19],41x69,467,0,9}
+      panes:
+        - # Shell 1 (left pane)
+        - # Shell 2 (middle-left pane)
+        - # Shell 3 (middle-right pane)
+        - # Shell 4 (right-top pane)
+        - # Shell 5 (right-bottom pane)
+        - # Shell 6 (far right pane)
+        
+  - gis:
+      root: ~/dev/gis
+      layout: 94af,508x69,0,0{95x69,0,0,20,134x69,96,0,8,164x69,231,0,16,70x69,396,0[70x34,396,0,17,70x34,396,35,19],41x69,467,0,9}
+      panes:
+        - # Shell 1 (left pane)
+        - # Shell 2 (middle-left pane)
+        - # Shell 3 (middle-right pane)
+        - # Shell 4 (right-top pane)
+        - # Shell 5 (right-bottom pane)
+        - # Shell 6 (far right pane)
+        
+  - notes:
+      root: ~/notes
+      panes:
+        - nvim tmux-nvim-cheatsheet.md

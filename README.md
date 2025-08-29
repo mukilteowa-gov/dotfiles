@@ -6,9 +6,14 @@ Personal dotfiles managed with [GNU Stow](https://www.gnu.org/software/stow/) fo
 
 - **Zsh** configuration with [Zinit](https://github.com/zdharma-continuum/zinit) plugin manager
 - **Tmux** configuration with [Catppuccin](https://github.com/catppuccin/tmux) theme
+- **Tmuxinator** project layout configurations
 - **Neovim** configuration 
 - **Oh My Posh** prompt theme
+- **Git** configuration and global gitignore
+- **Bash** configuration for fallback shell
+- **GitHub CLI** settings
 - **Shell aliases** and utilities
+- **Local scripts** and PATH management
 - Development environment setup scripts
 
 ## 🚀 Quick Start
@@ -64,9 +69,29 @@ dotfiles/
 ├── tmux/               # Tmux configuration
 │   ├── .tmux.conf
 │   └── .tmux/          # Tmux plugins and themes
+├── tmuxinator/         # Tmux project layouts
+│   └── .config/
+│       └── tmuxinator/
+│           ├── work.yml
+│           ├── home.yml
+│           └── ...
 ├── nvim/               # Neovim configuration
 │   └── .config/
 │       └── nvim/
+├── git/                # Git configuration
+│   ├── .gitconfig
+│   └── .gitignore_global
+├── bash/               # Bash configuration
+│   ├── .bashrc
+│   └── .profile
+├── gh/                 # GitHub CLI configuration
+│   └── .config/
+│       └── gh/
+│           └── config.yml
+├── bin/                # Local scripts
+│   └── .local/
+│       └── bin/
+│           └── env
 ├── shell/              # Shell aliases and utilities
 │   ├── .aliases
 │   └── claude-badge.sh
@@ -101,7 +126,12 @@ If you prefer to install manually:
    ```bash
    stow zsh        # Install zsh configuration
    stow tmux       # Install tmux configuration
+   stow tmuxinator # Install tmux project layouts
    stow nvim       # Install neovim configuration
+   stow git        # Install git configuration
+   stow bash       # Install bash configuration
+   stow gh         # Install GitHub CLI settings
+   stow bin        # Install local scripts
    stow shell      # Install shell aliases
    stow ohmyposh   # Install oh-my-posh theme
    ```
@@ -168,7 +198,7 @@ To update your dotfiles:
 ```bash
 cd ~/dotfiles
 git pull
-stow --restow zsh tmux nvim shell ohmyposh
+stow --restow zsh tmux tmuxinator nvim git bash gh bin shell ohmyposh
 ```
 
 ## 🐛 Troubleshooting
@@ -177,8 +207,8 @@ stow --restow zsh tmux nvim shell ohmyposh
 If stow reports conflicts:
 ```bash
 # Remove existing files and try again
-rm ~/.zshrc ~/.tmux.conf  # etc.
-stow zsh tmux nvim shell ohmyposh
+rm ~/.zshrc ~/.tmux.conf ~/.gitconfig ~/.bashrc  # etc.
+stow zsh tmux tmuxinator nvim git bash gh bin shell ohmyposh
 ```
 
 ### Zsh Not Loading

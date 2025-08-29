@@ -1,0 +1,25 @@
+# ~/.config/tmuxinator/avstack.yml
+# Avstack project workspace
+
+name: avstack
+root: ~/projects/avstack
+
+# Project-specific setup
+windows:
+  - editor:
+      layout: main-vertical
+      panes:
+        - nvim .
+        - # File tree / secondary files
+  - server:
+      panes:
+        - # Development server
+  - logs:
+      panes:
+        - # Application logs
+  - database:
+      panes:
+        - # Database console/monitoring
+  - git:
+      panes:
+        - # Git operations
