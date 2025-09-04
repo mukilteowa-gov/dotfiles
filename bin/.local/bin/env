@@ -1,11 +1,28 @@
-#!/bin/sh
-# add binaries to PATH if they aren't added yet
-# affix colons on either side of $PATH to simplify matching
+#!/bin/bash
+# Environment variables for shell configuration
+
+# Add ~/.local/bin to PATH if not already there
 case ":${PATH}:" in
     *:"$HOME/.local/bin":*)
         ;;
     *)
-        # Prepending path in case a system-installed binary needs to be overridden
         export PATH="$HOME/.local/bin:$PATH"
         ;;
 esac
+
+# Add cargo bin to PATH if it exists
+if [[ -d "$HOME/.cargo/bin" ]] && [[ ":${PATH}:" != *:"$HOME/.cargo/bin":* ]]; then
+    export PATH="$HOME/.cargo/bin:$PATH"
+fi
+
+# Default editor
+export EDITOR="nvim"
+export VISUAL="nvim"
+
+# FZF defaults
+export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
+export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+
+# Locale settings
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8

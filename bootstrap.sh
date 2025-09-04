@@ -73,6 +73,10 @@ install_system_deps() {
         "python3"
         "python3-pip"
         "python3-venv"
+        "fzf"
+        "bat"
+        "pkg-config"
+        "libssl-dev"
     )
     
     sudo apt install -y "${packages[@]}"
@@ -198,6 +202,27 @@ install_oh_my_posh() {
     print_success "Oh My Posh installed"
 }
 
+# Install Lazygit
+install_lazygit() {
+    if command_exists lazygit; then
+        print_success "Lazygit already installed"
+        return
+    fi
+    
+    print_status "Installing Lazygit..."
+    
+    local LAZYGIT_VERSION
+    LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
+    
+    cd /tmp
+    curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
+    tar xf lazygit.tar.gz lazygit
+    sudo install lazygit /usr/local/bin
+    rm -f lazygit.tar.gz lazygit
+    
+    print_success "Lazygit installed"
+}
+
 # Install Rust (optional but useful for many tools)
 install_rust() {
     if command_exists rustc; then
@@ -254,24 +279,46 @@ setup_zsh() {
 install_additional_tools() {
     print_status "Installing additional development tools..."
     
-    # Install bat (better cat)
-    if ! command_exists bat; then
-        sudo apt install -y bat
+    # Create bat symlink if needed (Ubuntu installs as batcat)
+    if command_exists batcat && ! command_exists bat; then
         mkdir -p ~/.local/bin
         ln -sf /usr/bin/batcat ~/.local/bin/bat
+        print_success "Created bat symlink"
     fi
     
-    # Install exa (better ls) - now called eza
-    if ! command_exists eza; then
-        cargo install eza 2>/dev/null || true
+    # Install cargo tools if cargo is available
+    if command_exists cargo; then
+        # Install eza (better ls)
+        if ! command_exists eza; then
+            print_status "Installing eza via cargo..."
+            cargo install eza
+            print_success "eza installed"
+        else
+            print_success "eza already installed"
+        fi
+        
+        # Install delta (better git diff)
+        if ! command_exists delta; then
+            print_status "Installing delta via cargo..."
+            cargo install git-delta
+            print_success "delta installed"
+        else
+            print_success "delta already installed"
+        fi
+        
+        # Install zoxide if not already installed (better cd)
+        if ! command_exists zoxide; then
+            print_status "Installing zoxide via cargo..."
+            cargo install zoxide
+            print_success "zoxide installed"
+        else
+            print_success "zoxide already installed"
+        fi
+    else
+        print_warning "Cargo not available, skipping Rust tools installation"
     fi
     
-    # Install delta (better git diff)
-    if ! command_exists delta; then
-        cargo install git-delta 2>/dev/null || true
-    fi
-    
-    print_success "Additional tools installed"
+    print_success "Additional tools processed"
 }
 
 # Final setup and verification
@@ -347,6 +394,7 @@ main() {
     install_pnpm
     install_neovim
     install_oh_my_posh
+    install_lazygit
     install_rust
     clone_dotfiles
     install_dotfiles

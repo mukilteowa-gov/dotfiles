@@ -29,6 +29,16 @@ print_error() {
     echo -e "${RED}[ERROR]${NC} $1"
 }
 
+# Check if running as root
+check_not_root() {
+    if [[ $EUID -eq 0 ]]; then
+        print_error "This script should not be run as root!"
+        print_status "Please run as a normal user: ./install.sh"
+        exit 1
+    fi
+    print_success "Running as user: $USER"
+}
+
 # Check if stow is installed
 check_stow() {
     if ! command -v stow &> /dev/null; then
@@ -146,13 +156,51 @@ install_zinit() {
     fi
 }
 
+# Create environment file if missing
+create_env_file() {
+    local env_file="$HOME/.local/bin/env"
+    
+    if [[ ! -f "$env_file" ]]; then
+        print_status "Creating environment file..."
+        mkdir -p "$HOME/.local/bin"
+        cat > "$env_file" << 'EOF'
+#!/bin/bash
+# Environment variables for shell configuration
+
+# Add ~/.local/bin to PATH
+export PATH="$HOME/.local/bin:$PATH"
+
+# Add cargo bin to PATH if it exists
+[[ -d "$HOME/.cargo/bin" ]] && export PATH="$HOME/.cargo/bin:$PATH"
+
+# Default editor
+export EDITOR="nvim"
+export VISUAL="nvim"
+
+# FZF defaults
+export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
+export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+
+# Locale settings
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+EOF
+        chmod +x "$env_file"
+        print_success "Environment file created"
+    else
+        print_success "Environment file already exists"
+    fi
+}
+
 # Main installation function
 main() {
     print_status "Starting dotfiles installation..."
     echo
     
+    check_not_root
     check_stow
     backup_existing
+    create_env_file
     install_dotfiles
     setup_zsh
     install_zinit
